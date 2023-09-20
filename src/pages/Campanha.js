@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Box,
   Br,
@@ -17,13 +17,51 @@ import Input, { InputGroup } from "../components/form/input/Input";
 import DataTable from "../components/dataTable/DataTable";
 
 const Campanha = () => {
-  const [teste, setTeste] = React.useState('')
+  const [campanha, setCampanha] = useState("");
 
-  function handeteste(event) {
+
+
+  function handleClick(event) {
     event.preventDefault();
+    document.getElementById("conteudo").innerHTML += `<p class="paragrafo-campanha">${campanha}</p>`
+    console.log(campanha);
 
-    console.log(teste)
+    const postWhats = async () => {
+      const obj = {
+        dataInicio: "2023-09-17T08:00:00Z",
+        dataFim: "2023-09-18T08:00:00Z",
+        message: `${campanha}`,
+        messageTyp: "text",
+        phoneInitia: "5511957818539",
+        leads: [
+          {
+            "name": "Marco Automobilismo",
+            "phone": "5511970277484",
+            "state": "São Paulo",
+            "category": "Cliente"
+          },
+          {
+            "name": "cabelereiro Mirah",
+            "phone": "5511956877422",
+            "state": "Rio de Janeiro",
+            "category": "Prospect"
+          }
+        ]
+
+      }
+
+      const post = await fetch(`http://localhost:8080/api/whatsapp/send/message`, {
+        method: 'POST',
+        headers: {
+
+        },
+        body: JSON.stringify(obj)
+      })
+    }
+
+    postWhats()
   }
+
   return (
     <Section>
       <Container>
@@ -99,29 +137,17 @@ const Campanha = () => {
               padding: "1rem",
             }}
           >
-            <P
-              style={{
-                width: "max-content",
-                borderRadius: "10px",
-                background: "#FFF",
-                boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                color: "#25804F",
-                padding: "1rem",
-                margin: "auto 0 2rem auto",
-              }}
-              fontSize={1.25}
-            >
-              Promoção imperdível! Feijoada completa por apenas <Br /> R$59,90!
-              Quartas e sábados, das 12:00 às 16:00. Não deixe <Br /> de
-              experimentar essa delícia!
-            </P>
+            <Div id="conteudo">
+
+            </Div>
+             
             <Div style={{ width: "100%" }}>
               <Form
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr auto",
                   gap: "10px",
-                  padding: "0",
+                  padding: '0'
                 }}
               >
                 <InputGroup background="#fff" border="solid 1px #4B4B4B">
@@ -129,8 +155,8 @@ const Campanha = () => {
                     placeholder="Digite a mensagem a ser disparada..."
                     cor="#2171AC"
                     corplaceholder="#2171AC"
-                    value={ teste }
-                    onChange={({target}) => setTeste(target.value)}
+                    value={campanha}
+                    onChange={({ target }) => setCampanha(target.value)}
                   />
                 </InputGroup>
 
@@ -142,9 +168,10 @@ const Campanha = () => {
                     height: "40px",
                     padding: ".5rem 1.2rem",
                   }}
-
-                  onClick={handeteste}
-                />
+                  onClick={handleClick}
+                >
+                  Enviar
+                </Button>
               </Form>
             </Div>
           </Box>

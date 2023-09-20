@@ -56,9 +56,14 @@ const GlobalStyles = createGlobalStyle`
   }
 
 
-  .paragrafo-campanha {
-    background: red;
-    color: #fff;
+  .paragrafo-campanha{
+    width: max-content;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #25804F;
+    padding: 1rem;
+    margin: auto 0 1rem auto;
   }
 `;
 
