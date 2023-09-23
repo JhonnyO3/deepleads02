@@ -1,5 +1,5 @@
-export const BASE_URL = "http://localhost:8081/api/auth/";
-export const BASE_MINERAR = 'http://localhost:8081/api/mineracao/generate/leads/by-id?id=1';
+export const BASE_URL = "http://localhost:8080/api/auth/";
+export const BASE_MINERAR = 'http://localhost:8080/api/mineracao/generate/leads/by-id?id=1';
 
 export const TOKEN_POST = ( body ) => {
   return {

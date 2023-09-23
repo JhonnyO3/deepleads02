@@ -35,7 +35,7 @@ const Inicio = () => {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:8081/api/generative/ia/generate/ia/message?message=${campanha} com 25 palavras&apiKey=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`
+      `http://localhost:8080/api/generative/ia/generate/ia/message?message=${campanha} com 25 palavras&apiKey=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`
     );
 
     const json = await response.json();

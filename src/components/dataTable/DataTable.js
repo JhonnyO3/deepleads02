@@ -1,6 +1,7 @@
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import styled from "styled-components";
+import { useState } from 'react';
 
 export const ContainerTable = styled.div`
   width: 100%;
@@ -14,13 +15,19 @@ export const ContainerTable = styled.div`
 const DataTable = () => {
   const [rowss, setRowss] = React.useState(null);
 
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  console.log(selectedRows)
+
   React.useEffect(() => {
     const getLead = async () => {
       const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users`
+        `http://localhost:8080/api/mineracao/get/leads/by-id?id=103`
       );
+      
       const json = await response.json();
       setRowss(json);
+      console.log(json)
 
       console.log(json);
     };
@@ -29,20 +36,14 @@ const DataTable = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Nome", width: 130 },
-    { field: "username", headerName: "Usuário", width: 130 },
-    {
-      field: "email",
-      headerName: "E-mail",
-      type: "email",
-      width: 90,
-    },
+    { field: "name", headerName: "Nome", width: 230 },
+    { field: "phone", headerName: "Telefone", width: 130 },
+    { field: "category", headerName: "Categoria", type: "email", width: 130,},
+    { field: "plusCode", headerName: "PlusCode", type: "email", width: 130,},
+    { field: "place", headerName: "Endereco", type: "email", width: 230,},
+    { field: "stars", headerName: "Avaliações", type: "email", width: 130,},
 
-    {
-      field: "address",
-      headerName: "Endereço",
-      width: 90,
-    },
+  
   ];
 
   return (
@@ -66,10 +67,13 @@ const DataTable = () => {
           }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
+          selectionModel={selectedRows} 
         />
       ) : (
         "Sem dados"
       )}
+            <div>
+      </div>
     </ContainerTable>
   );
 };
