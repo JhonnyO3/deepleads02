@@ -15,25 +15,9 @@ export const ContainerTable = styled.div`
 const DataTable = () => {
   const [rowss, setRowss] = React.useState(null);
 
-<<<<<<< HEAD
   const [selectedRows, setSelectedRows] = useState([]);
   const [data, setData] = React.useState([])
 
-=======
-  const handleChange = (event) => {
-    event.preventDefault();
-
-    change()
-
-    console.log('clicou')
-  }
-
-  const change = (teste) => {
-    console.log(teste)
-  }
-
-  
->>>>>>> 518cc911f8956602f26026480c4c55449b163772
 
   React.useEffect(() => {
     const getLead = async () => {
@@ -43,12 +27,9 @@ const DataTable = () => {
       
       const json = await response.json();
       setRowss(json);
-<<<<<<< HEAD
       console.log(json)
 
       console.log(json);
-=======
->>>>>>> 518cc911f8956602f26026480c4c55449b163772
     };
     getLead();
   }, []);
@@ -104,7 +85,6 @@ const DataTable = () => {
   };
   return (
     <>
-<<<<<<< HEAD
     <ContainerTable>
       {rowss ? (
         <DataGrid
@@ -136,37 +116,6 @@ const DataTable = () => {
     <button onClick={handleSubmitUsuarios}>Enivar</button>
     </>
 
-=======
-      <ContainerTable>
-        {rowss ? (
-          <DataGrid
-            className="table"
-            rows={rowss}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            slots={{ toolbar: GridToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-            onRowSelectionModelChange={change}
-          />
-        ) : (
-          "Carregando..."
-        )}
-      </ContainerTable>
-
-      <button onClick={handleChange}>Enivar</button>
-    </>
->>>>>>> 518cc911f8956602f26026480c4c55449b163772
   );
 };
 
