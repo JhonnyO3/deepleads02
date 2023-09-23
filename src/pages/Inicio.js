@@ -81,7 +81,7 @@ const Inicio = () => {
           <Paragrafo style={{ marginBottom: "2rem" }}>
             Aqui você poderá interagir com uma{" "}
             <Span>inteligência artificial</Span> que será capaz de criar
-            sugestões para auxiliar você durante a criação da sua
+            sugestões para auxiliar você durante a criação da sua 
             <Span>promoção</Span>, <Span>divulgação</Span> ou{" "}
             <Span>campanha</Span>.
           </Paragrafo>

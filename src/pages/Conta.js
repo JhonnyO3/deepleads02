@@ -94,7 +94,7 @@ const Conta = () => {
             <InputGroup background="#CDCDCD">
               <Input
                 id="telefone"
-                placeholder="telefone"
+                placeholder="Telefone"
                 type="text"
                 cor="#4b4b4b"
                 corPlac="#4b4b4b"

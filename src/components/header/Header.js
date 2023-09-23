@@ -284,9 +284,9 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <CHeader>
-        <Logo className="logo">
+        <Link to="/home" className="logo">
           <Img src={logo} alt="deepleads" />
-        </Logo>
+        </Link>
 
         <Nav className={ativo ? "ativo" : ""}>
           <Ul>

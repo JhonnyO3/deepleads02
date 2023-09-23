@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Box,
   Br,
@@ -17,6 +17,51 @@ import Input, { InputGroup } from "../components/form/input/Input";
 import DataTable from "../components/dataTable/DataTable";
 
 const Campanha = () => {
+  const [campanha, setCampanha] = useState("");
+
+
+
+  function handleClick(event) {
+    event.preventDefault();
+    document.getElementById("conteudo").innerHTML += `<p class="paragrafo-campanha">${campanha}</p>`
+    console.log(campanha);
+
+    const postWhats = async () => {
+      const obj = {
+        dataInicio: "2023-09-17T08:00:00Z",
+        dataFim: "2023-09-18T08:00:00Z",
+        message: `${campanha}`,
+        messageTyp: "text",
+        phoneInitia: "5511957818539",
+        leads: [
+          {
+            "name": "Marco Automobilismo",
+            "phone": "5511970277484",
+            "state": "São Paulo",
+            "category": "Cliente"
+          },
+          {
+            "name": "cabelereiro Mirah",
+            "phone": "5511956877422",
+            "state": "Rio de Janeiro",
+            "category": "Prospect"
+          }
+        ]
+
+      }
+
+      const post = await fetch(`http://localhost:8080/api/whatsapp/send/message`, {
+        method: 'POST',
+        headers: {
+
+        },
+        body: JSON.stringify(obj)
+      })
+    }
+
+    postWhats()
+  }
+
   return (
     <Section>
       <Container>
@@ -30,7 +75,7 @@ const Campanha = () => {
             <Span>Campanha</Span>
           </Paragrafo>
 
-          <Div style={{ width: "100%", maxWidth: "1000px" }}>
+          <Div style={{ width: "100%", maxWidth: "1000px", marginBottom: '3rem' }}>
             <Form
               style={{
                 display: "grid",
@@ -40,7 +85,7 @@ const Campanha = () => {
             >
               <InputGroup background="#fff" border="solid 1px #4B4B4B">
                 <Input
-                  placeholder="Nicho de busca"
+                  placeholder="Data Início"
                   cor="#2171AC"
                   corplaceholder="#2171AC"
                 />
@@ -48,7 +93,7 @@ const Campanha = () => {
 
               <InputGroup background="#fff" border="solid 1px #4B4B4B">
                 <Input
-                  placeholder="Alcance"
+                  placeholder="Data Término"
                   cor="#2171AC"
                   corplaceholder="#2171AC"
                 />
@@ -56,26 +101,7 @@ const Campanha = () => {
 
               <InputGroup background="#fff" border="solid 1px #4B4B4B">
                 <Input
-                  placeholder="Mais informações"
-                  cor="#2171AC"
-                  corplaceholder="#2171AC"
-                />
-              </InputGroup>
-            </Form>
-          </Div>
-
-          <Div style={{ width: "100%", maxWidth: "1000px" }}>
-            <Form
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "10px",
-                marginBottom: "34px",
-              }}
-            >
-              <InputGroup background="#fff" border="solid 1px #4B4B4B">
-                <Input
-                  placeholder="Nicho de busca"
+                  placeholder="Horário"
                   cor="#2171AC"
                   corplaceholder="#2171AC"
                 />
@@ -83,15 +109,7 @@ const Campanha = () => {
 
               <InputGroup background="#fff" border="solid 1px #4B4B4B">
                 <Input
-                  placeholder="Alcance"
-                  cor="#2171AC"
-                  corplaceholder="#2171AC"
-                />
-              </InputGroup>
-
-              <InputGroup background="#fff" border="solid 1px #4B4B4B">
-                <Input
-                  placeholder="Mais informações"
+                  placeholder="Nº da Campanha"
                   cor="#2171AC"
                   corplaceholder="#2171AC"
                 />
@@ -119,29 +137,17 @@ const Campanha = () => {
               padding: "1rem",
             }}
           >
-            <P
-              style={{
-                width: "max-content",
-                borderRadius: "10px",
-                background: "#FFF",
-                boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                color: "#25804F",
-                padding: "1rem",
-                margin: "auto 0 2rem auto",
-              }}
-              fontSize={1.25}
-            >
-              Promoção imperdível! Feijoada completa por apenas <Br /> R$59,90!
-              Quartas e sábados, das 12:00 às 16:00. Não deixe <Br /> de
-              experimentar essa delícia!
-            </P>
+            <Div id="conteudo">
+
+            </Div>
+             
             <Div style={{ width: "100%" }}>
               <Form
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr auto",
                   gap: "10px",
-                  padding: "0",
+                  padding: '0'
                 }}
               >
                 <InputGroup background="#fff" border="solid 1px #4B4B4B">
@@ -149,6 +155,8 @@ const Campanha = () => {
                     placeholder="Digite a mensagem a ser disparada..."
                     cor="#2171AC"
                     corplaceholder="#2171AC"
+                    value={campanha}
+                    onChange={({ target }) => setCampanha(target.value)}
                   />
                 </InputGroup>
 
@@ -160,7 +168,10 @@ const Campanha = () => {
                     height: "40px",
                     padding: ".5rem 1.2rem",
                   }}
-                />
+                  onClick={handleClick}
+                >
+                  Enviar
+                </Button>
               </Form>
             </Div>
           </Box>

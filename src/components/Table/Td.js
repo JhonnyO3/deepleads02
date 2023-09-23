@@ -1,5 +1,3 @@
-import styles from './Td.module.css'
-
 const Td = ({ titleTd, children }) => {
   return (
     <td>

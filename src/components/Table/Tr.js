@@ -1,5 +1,4 @@
-import styles from './Tr.module.css'
-
+import React from 'react'
 const Tr = ({ children }) => {
   return (
     <tr>
