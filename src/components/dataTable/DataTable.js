@@ -16,13 +16,13 @@ const DataTable = () => {
   const [rowss, setRowss] = React.useState(null);
 
   const [selectedRows, setSelectedRows] = useState([]);
+  const [data, setData] = React.useState([])
 
-  console.log(selectedRows)
 
   React.useEffect(() => {
     const getLead = async () => {
       const response = await fetch(
-        `http://localhost:8080/api/mineracao/get/leads/by-id?id=103`
+        `http://localhost:8080/api/mineracao/get/leads/by-id?id=3952`
       );
       
       const json = await response.json();
@@ -46,7 +46,45 @@ const DataTable = () => {
   
   ];
 
+  const onRowSelectionChange = (ids) => {
+    const selectedIDs = new Set(ids);
+    const linha = rowss.filter((row) => selectedIDs.has(row.id));
+    setSelectedRows(linha)
+    const obj = linha.map(({name, phone, state, category}) => {
+      phone = "55" + phone;
+      return {name, phone, state, category}
+    })
+
+    setData(obj)
+
+  };
+
+
+
+  const handleSubmitUsuarios = (event) => {
+    event.preventDefault();
+
+    fetch("http://localhost:8080/api/whatsapp/send/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        dataInicio: "2023-09-17T08:00:00Z",
+        dataFim: "2023-09-18T08:00:00Z",
+        message:
+          "Teste mensagem API DeepLeads pelo React se voce recebeu esta mensagem, desconsidere!",
+        messageType: "text",
+        phoneInitial: "5511957818539",
+        leads: data,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  };
   return (
+    <>
     <ContainerTable>
       {rowss ? (
         <DataGrid
@@ -67,14 +105,17 @@ const DataTable = () => {
           }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
-          selectionModel={selectedRows} 
-        />
+          onRowSelectionModelChange={onRowSelectionChange}
+          />
       ) : (
-        "Sem dados"
+        "Carregar dados"
       )}
             <div>
       </div>
     </ContainerTable>
+    <button onClick={handleSubmitUsuarios}>Enivar</button>
+    </>
+
   );
 };
 
